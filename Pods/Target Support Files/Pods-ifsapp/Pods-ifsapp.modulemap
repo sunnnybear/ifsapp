@@ -1,0 +1,6 @@
+module Pods_ifsapp {
+  umbrella header "Pods-ifsapp-umbrella.h"
+
+  export *
+  module * { export * }
+}

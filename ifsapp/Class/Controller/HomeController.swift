@@ -11,20 +11,44 @@ import WebKit
 class HomeController: UIViewController, WKUIDelegate {
     
     var webView: WKWebView!
+    
+    override func loadView() {
         
-        override func loadView() {
+        let webConfiguration = WKWebViewConfiguration()
+        webView = WKWebView(frame: .zero, configuration: webConfiguration)
+        webView.uiDelegate = self
+        view = webView
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // 验证用户凭据是否有效，如果有效则跳转到主视图控制器
+        if let token = UserDefaults.standard.string(forKey: "AuthToken") {
+            if AuthHelper.isTokenValid(token) {
+                // 从 storyboard 加载主视图控制器
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let loginController = storyboard.instantiateViewController(withIdentifier: "LoginController")
+                
+                // 将主视图控制器设置为窗口的根视图控制器
+                UIApplication.shared.windows.first?.rootViewController = loginController
+                
+                // 激活窗口
+                UIApplication.shared.windows.first?.makeKeyAndVisible()
+            } else {
+                // 显示错误消息
+                //showErrorAlert()
+            }
+        } else{
             
-            let webConfiguration = WKWebViewConfiguration()
-            webView = WKWebView(frame: .zero, configuration: webConfiguration)
-            webView.uiDelegate = self
-            view = webView
         }
-
-        override func viewDidLoad() {
-            super.viewDidLoad()
-            
-            let myURL = URL(string:"https://www.baidu.com")
-            let myRequest = URLRequest(url: myURL!)
-            webView.load(myRequest)
-        }
+        
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let myURL = URL(string:"https://www.baidu.com")
+        let myRequest = URLRequest(url: myURL!)
+        webView.load(myRequest)
+    }
 }
