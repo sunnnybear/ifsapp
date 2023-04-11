@@ -8,5 +8,7 @@
 import Foundation
 
 struct Server {
-    static let LOGIN_URL = "https://60223c84-1f98-4f96-9cbd-02a8cca875e9.mock.pstmn.io"
+    static let MOCK_SERVER = "https://0aad93c0-b7e6-4333-ab84-2b71d93c2c26.mock.pstmn.io"
+    
+    static let LOGIN_URL = "/ifs/login"
 }
